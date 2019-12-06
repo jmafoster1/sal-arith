@@ -30,6 +30,9 @@ arithmetic {n_ : INTEGER; STRING: TYPE} : CONTEXT = BEGIN
   value_minus : [[OPTION, OPTION] -> OPTION] =
   LAMBDA(x: OPTION, y: OPTION): maybe_arith_int(LAMBDA(x: INTEGER, y: INTEGER): x - y, x, y);
 
+  value_mul : [[OPTION, OPTION] -> OPTION] =
+  LAMBDA(x: OPTION, y: OPTION): maybe_arith_int(LAMBDA(x: INTEGER, y: INTEGER): x * y, x, y);
+
   maybe_bool_int : [[[[INTEGER, INTEGER] -> BOOLEAN], OPTION, OPTION] -> TRILEAN] =
   LAMBDA(f: [[INTEGER, INTEGER] -> BOOLEAN], x1 : OPTION, x2: OPTION):
     IF Some?(x1) AND Some?(x2) THEN
