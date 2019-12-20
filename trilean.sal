@@ -31,8 +31,8 @@ trilean : CONTEXT = BEGIN
       Invalid
     ENDIF;
 
-  maybe_nor: [[TRILEAN, TRILEAN] -> TRILEAN] = LAMBDA(x1 : TRILEAN, x2: TRILEAN):
-  maybe_not(maybe_or(x1, x2));
+  maybe_nor: [[BOOLEAN, BOOLEAN] -> BOOLEAN] = LAMBDA(x1 : BOOLEAN, x2: BOOLEAN):
+NOT(x1 OR x2);
 
   gval : [TRILEAN -> BOOLEAN] = LAMBDA(g : TRILEAN) : g = True;
 
