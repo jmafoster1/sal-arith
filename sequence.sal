@@ -17,12 +17,7 @@ BEGIN
 
 %% Local types - do not export; for internal use within this context only.
 
-	%Index : TYPE = [0..max];
-
-	Size : TYPE = [0..max];
-	Index : TYPE = {x : Size | x /= max};
-
-	X : TYPE = {x : XB | x /= xb};
+	Index : TYPE = [0..max];
 
 %% Exported type - use only if you don't want to apply operations from the
 %% function context as well.  If you do, use the base type [Index -> XB].
@@ -34,7 +29,7 @@ BEGIN
 
 	empty : Sequence = LAMBDA (n : Index) : xb;
 
-	insert (val : X, seq : Sequence) : Sequence =
+	insert (val : XB, seq : Sequence) : Sequence =
 		IF seq(max-1) = xb
 		THEN LAMBDA (i : Index) :
 			IF i = 0 THEN val ELSE seq(i-1) ENDIF
@@ -45,9 +40,10 @@ BEGIN
 %% Calculate the length of a sequence.  This recursive definition seems
 %% to succeed because SAL can determine an upper limit to the recursions.
 
-	sizeAux (seq : Sequence, i : Index) : NATURAL =
+	sizeAux (seq : Sequence, i : NATURAL) : NATURAL =
 		IF seq(i) = xb THEN i
-		ELSIF i = max-1 THEN max
+		ELSIF i >= max AND seq(i) = xb THEN max
+		ELSIF i >= max THEN max + 1
 		ELSE sizeAux(seq, i+1) ENDIF;
 
 	size? (seq : Sequence) : NATURAL = sizeAux(seq, 0);
