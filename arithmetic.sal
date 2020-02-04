@@ -75,7 +75,19 @@ check_underflow : [OPTION -> BOOLEAN] = LAMBDA(v : OPTION) :
 check_overflow : [OPTION -> BOOLEAN] = LAMBDA(v : OPTION) :
     IF Some?(v) THEN
         IF Num?(valueOf(v)) THEN
-            gval(value_le(v, Some(Num(0-n_))))
+            gval(value_le(v, Some(Num(n_))))
+        ELSE
+            TRUE
+        ENDIF
+    ELSE
+        TRUE
+    ENDIF;
+
+
+check_bounds : [OPTION -> BOOLEAN] = LAMBDA(v : OPTION) :
+    IF Some?(v) THEN
+        IF Num?(valueOf(v)) THEN
+            gval(value_ge(v, Some(Num(0-n_)))) AND gval(value_le(v, Some(Num(n_))))
         ELSE
             TRUE
         ENDIF
