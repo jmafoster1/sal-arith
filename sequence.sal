@@ -24,28 +24,28 @@ BEGIN
 
 	Sequence : TYPE = [Index -> XB];
 
-%% Sequence constructors.  An empty sequence is a function where every index
-%% maps to the undefined element.
-
-	empty : Sequence = LAMBDA (n : Index) : xb;
-
-	insert (val : XB, seq : Sequence) : Sequence =
-		IF seq(max-1) = xb
-		THEN LAMBDA (i : Index) :
-			IF i = 0 THEN val ELSE seq(i-1) ENDIF
-		ELSE LAMBDA (i : Index) :
-			IF i = 0 THEN xb ELSE seq(i) ENDIF	%% invalid
-		ENDIF;
-
 %% Calculate the length of a sequence.  This recursive definition seems
 %% to succeed because SAL can determine an upper limit to the recursions.
 
-	sizeAux (seq : Sequence, i : NATURAL) : NATURAL =
-		IF seq(i) = xb THEN i
+	sizeAux (seq : Sequence, i : Index) : Index =
+		IF seq(i) = xb AND (FORALL (ia: Index): ia > i => seq(ia) = xb) THEN i
 		ELSIF i >= max AND seq(i) = xb THEN max
 		ELSIF i >= max THEN max + 1
 		ELSE sizeAux(seq, i+1) ENDIF;
 
-	size? (seq : Sequence) : NATURAL = sizeAux(seq, 0);
+	size? (seq : Sequence) : Index = sizeAux(seq, 0);
+
+	%% Sequence constructors.  An empty sequence is a function where every index
+	%% maps to the undefined element.
+
+		empty : Sequence = LAMBDA (n : Index) : xb;
+
+		assign (seq : Sequence, key : Index, val : XB) : Sequence =
+			LAMBDA (i : Index) : IF i = key THEN val ELSE seq(i) ENDIF;
+
+		% insert (val : XB, seq : Sequence) : Sequence = assign(seq, size?(seq), val);
+		insert (val : XB, seq : Sequence) : Sequence =
+			LAMBDA (i : Index) : IF i = 0 THEN val ELSE seq(i-1) ENDIF;
+
 
 END
