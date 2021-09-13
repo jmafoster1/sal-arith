@@ -1,6 +1,6 @@
-arithmetic {n_ : INTEGER; STRING: TYPE} : CONTEXT = BEGIN
+arithmetic {n1 : INTEGER; n2 : INTEGER; STRING: TYPE} : CONTEXT = BEGIN
 IMPORTING trilean;
-IMPORTING value{n_, STRING};
+IMPORTING value{n1, n2, STRING};
 IMPORTING option{VALUE};
 
 SomeNum? : [option{VALUE} ! B_OPTION -> BOOLEAN] =
@@ -64,7 +64,7 @@ LAMBDA(x: OPTION, y: OPTION): IF x = y THEN True ELSE False ENDIF;
 check_underflow : [OPTION -> BOOLEAN] = LAMBDA(v : OPTION) :
     IF Some?(v) THEN
         IF Num?(valueOf(v)) THEN
-            gval(value_ge(v, Some(Num(0-n_))))
+            gval(value_ge(v, Some(Num(n1))))
         ELSE
             TRUE
         ENDIF
@@ -75,7 +75,7 @@ check_underflow : [OPTION -> BOOLEAN] = LAMBDA(v : OPTION) :
 check_overflow : [OPTION -> BOOLEAN] = LAMBDA(v : OPTION) :
     IF Some?(v) THEN
         IF Num?(valueOf(v)) THEN
-            gval(value_le(v, Some(Num(n_))))
+            gval(value_le(v, Some(Num(n2))))
         ELSE
             TRUE
         ENDIF
@@ -87,7 +87,7 @@ check_overflow : [OPTION -> BOOLEAN] = LAMBDA(v : OPTION) :
 check_bounds : [OPTION -> BOOLEAN] = LAMBDA(v : OPTION) :
     IF Some?(v) THEN
         IF Num?(valueOf(v)) THEN
-            gval(value_ge(v, Some(Num(0-n_)))) AND gval(value_le(v, Some(Num(n_))))
+            gval(value_ge(v, Some(Num(n1)))) AND gval(value_le(v, Some(Num(n2))))
         ELSE
             TRUE
         ENDIF

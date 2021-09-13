@@ -1,5 +1,5 @@
-value {n_: INTEGER; STRING: TYPE} : CONTEXT = BEGIN
-  BOUNDED_INT : TYPE = [(0-n_)..n_];
+value {n1: INTEGER; n2: INTEGER; STRING: TYPE} : CONTEXT = BEGIN
+  BOUNDED_INT : TYPE = [n1..n2];
 
   % The VALUE type for inputs, outputs, and registers with a bottom element
   B_VALUE : TYPE = DATATYPE

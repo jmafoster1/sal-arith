@@ -35,5 +35,6 @@ trilean : CONTEXT = BEGIN
 NOT(x1 OR x2);
 
   gval : [TRILEAN -> BOOLEAN] = LAMBDA(g : TRILEAN) : g = True;
+  check_exp : [TRILEAN -> BOOLEAN] = LAMBDA(g : TRILEAN) : g = True;
 
 END
